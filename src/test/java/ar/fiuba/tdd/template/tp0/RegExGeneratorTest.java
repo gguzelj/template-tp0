@@ -36,7 +36,7 @@ public class RegExGeneratorTest {
     @Test
     public void testAnyCharacter() {
         HashSet<String> one = newHashSet("1", "2", "3");
-        HashSet<String> other = newHashSet("3", "4", "1");
+        HashSet<String> other = newHashSet("3", "2", "1");
 
 
         assertEquals(one, other);
