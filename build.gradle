@@ -20,6 +20,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
+    mavenCentral()
     jcenter()
     maven {
         url "http://nexus-tecnicas7510.rhcloud.com/nexus/content/repositories/third-party"
@@ -28,6 +29,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'com.google.guava', name: 'guava', version: '15.0'
 }
 
 configurations.all {
