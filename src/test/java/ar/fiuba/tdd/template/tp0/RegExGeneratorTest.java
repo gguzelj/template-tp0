@@ -1,9 +1,9 @@
 package ar.fiuba.tdd.template.tp0;
 
-import com.google.common.collect.Sets;
+import ar.fiuba.tdd.template.tp0.generator.Generator;
+import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
 import org.junit.Test;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,17 +15,17 @@ import static org.junit.Assert.assertTrue;
 public class RegExGeneratorTest {
 
     private boolean validate(String regEx, int numberOfResults) {
-        RegExGenerator generator = new RegExGenerator();
-        // TODO: Uncomment parameters
-        List<String> results = generator.generate(/*regEx, numberOfResults*/);
+        RegExGenerator generator = new RegExGenerator(new Tokenizer(), new Generator(null), numberOfResults);
+
+        List<String> results = generator.generate(regEx, numberOfResults);
+
         // force matching the beginning and the end of the strings
         Pattern pattern = Pattern.compile("^" + regEx + "$");
 
 
         return results
                 .stream()
-                .reduce(true,
-                    (acc, item) -> {
+                .reduce(true,(acc, item) -> {
                         Matcher matcher = pattern.matcher(item);
                         return acc && matcher.find();
                     },
@@ -35,13 +35,8 @@ public class RegExGeneratorTest {
     //TODO: Uncomment these tests
     @Test
     public void testAnyCharacter() {
-        HashSet<String> one = newHashSet("1", "2", "3");
-        HashSet<String> other = newHashSet("3", "2", "1");
-
-
-        assertEquals(one, other);
-
 //        assertTrue(validate(".", 1));
+        assertTrue(Boolean.TRUE);
     }
 /*
     @Test
