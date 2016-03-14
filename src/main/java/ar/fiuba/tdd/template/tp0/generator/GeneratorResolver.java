@@ -1,13 +1,16 @@
-package ar.fiuba.tdd.template.tp0.generator.generators;
+package ar.fiuba.tdd.template.tp0.generator;
 
-import ar.fiuba.tdd.template.tp0.generator.StringGenerator;
+import ar.fiuba.tdd.template.tp0.generator.generators.StringGenerator;
+import ar.fiuba.tdd.template.tp0.generator.generators.AnyCharacterGenerator;
+import ar.fiuba.tdd.template.tp0.generator.generators.GroupGenerator;
+import ar.fiuba.tdd.template.tp0.generator.generators.LiteralGenerator;
 import ar.fiuba.tdd.template.tp0.tokenizer.Token;
-import ar.fiuba.tdd.template.tp0.tokenizer.enums.TokenType;
+import ar.fiuba.tdd.template.tp0.tokenizer.TokenType;
 
 import java.util.EnumMap;
 import java.util.Map;
 
-import static ar.fiuba.tdd.template.tp0.tokenizer.enums.TokenType.*;
+import static ar.fiuba.tdd.template.tp0.tokenizer.TokenType.*;
 import static java.util.Objects.isNull;
 
 public class GeneratorResolver {

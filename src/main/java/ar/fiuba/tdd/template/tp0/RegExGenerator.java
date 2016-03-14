@@ -5,14 +5,19 @@ import ar.fiuba.tdd.template.tp0.tokenizer.Token;
 import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
 
 import java.util.*;
+import java.util.function.IntUnaryOperator;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Objects.isNull;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.iterate;
+import static java.util.stream.IntStream.range;
 
 public class RegExGenerator {
 
     private static final String EMPTY_STRING = "";
+    private static final IntUnaryOperator TEST = i -> i;
 
     private final Tokenizer tokenizer;
     private final Generator generator;
@@ -30,22 +35,20 @@ public class RegExGenerator {
         }
 
         final List<Token> tokens = this.tokenizer.tokenize(regEx);
-        final List<String> results = new ArrayList<>();
 
-        IntStream.rangeClosed(0, numberOfResults)
-                .forEach(i -> results.add(this.generate(tokens)));
-
-        return results;
+        return range(0, numberOfResults)
+                .mapToObj(i -> this.generate(tokens))
+                .collect(toList());
     }
 
     private String generate(List<Token> tokens) {
-        if (isNull(tokens)){
+        if (isNull(tokens))
             throw new IllegalStateException("No tokens provided to generate string");
-        }
+        return mapResults(this.generator.generate(tokens));
+    }
 
-        final Map<Token, String> results = this.generator.generate(tokens);
+    private String mapResults(Map<Token, String> results) {
         final Optional<String> reduce = results.values().stream().reduce(String::concat);
-
         return (reduce.isPresent()) ? reduce.get() : EMPTY_STRING;
     }
 }
