@@ -5,19 +5,14 @@ import ar.fiuba.tdd.template.tp0.tokenizer.Token;
 import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
 
 import java.util.*;
-import java.util.function.IntUnaryOperator;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.IntStream.iterate;
 import static java.util.stream.IntStream.range;
 
 public class RegExGenerator {
 
-    private static final String EMPTY_STRING = "";
-    private static final IntUnaryOperator TEST = i -> i;
+    public static final Integer MAX_LENGTH = 5;
 
     private final Tokenizer tokenizer;
     private final Generator generator;
@@ -30,25 +25,22 @@ public class RegExGenerator {
     }
 
     public List<String> generate(String regEx, Integer numberOfResults) {
-        if (isNull(regEx) || isNull(numberOfResults)){
+        if (isNull(regEx) || isNull(numberOfResults)) {
             throw new IllegalArgumentException("Regex or number of results can't be empty");
         }
 
         final List<Token> tokens = this.tokenizer.tokenize(regEx);
-
-        return range(0, numberOfResults)
-                .mapToObj(i -> this.generate(tokens))
-                .collect(toList());
+        return range(0, numberOfResults).boxed().map(i -> this.generate(tokens)).collect(toList());
     }
 
     private String generate(List<Token> tokens) {
-        if (isNull(tokens))
+        if (isNull(tokens)) {
             throw new IllegalStateException("No tokens provided to generate string");
-        return mapResults(this.generator.generate(tokens));
+        }
+        return convertResults(this.generator.generate(tokens));
     }
 
-    private String mapResults(Map<Token, String> results) {
-        final Optional<String> reduce = results.values().stream().reduce(String::concat);
-        return (reduce.isPresent()) ? reduce.get() : EMPTY_STRING;
+    private String convertResults(List<String> results) {
+        return results.stream().reduce(String::concat).get();
     }
 }

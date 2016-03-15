@@ -1,14 +1,15 @@
 package ar.fiuba.tdd.template.tp0.generator;
 
-import ar.fiuba.tdd.template.tp0.generator.generators.StringGenerator;
 import ar.fiuba.tdd.template.tp0.generator.generators.AnyCharacterGenerator;
 import ar.fiuba.tdd.template.tp0.generator.generators.GroupGenerator;
 import ar.fiuba.tdd.template.tp0.generator.generators.LiteralGenerator;
+import ar.fiuba.tdd.template.tp0.generator.generators.StringGenerator;
 import ar.fiuba.tdd.template.tp0.tokenizer.Token;
 import ar.fiuba.tdd.template.tp0.tokenizer.TokenType;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Random;
 
 import static ar.fiuba.tdd.template.tp0.tokenizer.TokenType.*;
 import static java.util.Objects.isNull;
@@ -20,7 +21,7 @@ public class GeneratorResolver {
     static {
         generators = new EnumMap<>(TokenType.class);
 
-        generators.put(ANY_CHARACTER, new AnyCharacterGenerator());
+        generators.put(ANY_CHARACTER, new AnyCharacterGenerator(new Random()));
         generators.put(GROUP, new GroupGenerator());
         generators.put(LITERAL, new LiteralGenerator());
     }
@@ -28,7 +29,7 @@ public class GeneratorResolver {
     public StringGenerator resolve(Token token) {
         final StringGenerator response = generators.get(token.getType());
 
-        if (isNull(response)){
+        if (isNull(response)) {
             throw new IllegalArgumentException("Unknown token " + token);
         }
 
