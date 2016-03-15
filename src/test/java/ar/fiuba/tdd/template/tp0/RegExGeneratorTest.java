@@ -4,11 +4,11 @@ import ar.fiuba.tdd.template.tp0.generator.Generator;
 import ar.fiuba.tdd.template.tp0.generator.GeneratorResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.function.BinaryOperator;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertTrue;
@@ -69,7 +69,8 @@ public class RegExGeneratorTest {
     }
     */
     private RegExGenerator newRegExGenerator(int numberOfResults) {
-        Analyzer analyzer = new Analyzer();
+        QuantifierResolver quantifierResolver = new QuantifierResolver();
+        Analyzer analyzer = new Analyzer(quantifierResolver);
         Tokenizer tokenizer = new Tokenizer(analyzer);
         GeneratorResolver generatorResolver = new GeneratorResolver();
         Generator generator = new Generator(generatorResolver);

@@ -3,23 +3,22 @@ package ar.fiuba.tdd.template.tp0.tokenizer.analyzer;
 import ar.fiuba.tdd.template.tp0.tokenizer.Token;
 import ar.fiuba.tdd.template.tp0.tokenizer.TokenType;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.tokens.AnyCharacterToken;
 import ar.fiuba.tdd.template.tp0.tokenizer.tokens.GroupToken;
 import ar.fiuba.tdd.template.tp0.tokenizer.tokens.LiteralToken;
 
 import java.util.Optional;
 
+import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Helper.*;
+
 public class Analyzer {
 
-    //Quantifiers
-    private static final Character DOT = '.';
-    private static final Character PLUS = '+';
-    private static final Character ASTERISK = '*';
+    private final QuantifierResolver quantifierResolver;
 
-    private static final String POSSIBLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&/()=¡@";
-    private static final Character ESCAPE = '\\';
-    private static final Character OPEN_SQUARE_BRACKET = '[';
-    private static final Character CLOSE_SQUARE_BRACKET = ']';
+    public Analyzer(QuantifierResolver quantifierResolver) {
+        this.quantifierResolver = quantifierResolver;
+    }
 
     /**
      * This method analyze each character of the regex, emitting tokens when necessary.
@@ -43,8 +42,8 @@ public class Analyzer {
     }
 
     private Optional<Token> getToken(Integer index, Character character, String context) {
-        final TokenType tokenType = determineTokenType(index, character, context);
-        final Optional<Quantifier> quantifier = getQuantifier(index, context);
+        final TokenType tokenType = this.determineTokenType(index, character, context);
+        final Optional<Quantifier> quantifier = this.quantifierResolver.resolve(index, context);
 
         switch (tokenType) {
             case ANY_CHARACTER:
@@ -95,37 +94,6 @@ public class Analyzer {
 
     }
 
-    private Boolean isLiteral(Character character) {
-        return POSSIBLE_CHARACTERS.indexOf(character) != -1;
-    }
-
-    private Boolean isInsideGroup(Integer index, String context) {
-        Integer close = context.indexOf(CLOSE_SQUARE_BRACKET, index);
-        Integer open = context.substring(0, index).lastIndexOf(OPEN_SQUARE_BRACKET);
-        return open < index  && index < close;
-    }
-
-    private Boolean isNotInsideGroup(Integer index, String context) {
-        return !isInsideGroup(index, context);
-    }
-
-    private Boolean isGroup(Character character) {
-        return character.equals(OPEN_SQUARE_BRACKET);
-    }
-
-    private Boolean isAnyCharacter(Character character) {
-        return character.equals(DOT);
-    }
-
-    private Boolean isEscaped(Integer index, String context) {
-        final Character character = context.charAt((index == 0) ? 0 : index - 1 );
-        return character.equals(ESCAPE);
-    }
-
-    private Boolean isNotEscaped(Integer index, String context) {
-        return !isEscaped(index, context);
-    }
-
     private Optional<Token> emitAnyCharacterToken(Optional<Quantifier> quantifier) {
         return Optional.of(new AnyCharacterToken(quantifier));
     }
@@ -136,10 +104,6 @@ public class Analyzer {
 
     private Optional<Token> emitLiteralToken(Optional<Quantifier> quantifier) {
         return Optional.of(new LiteralToken(quantifier));
-    }
-
-    private Optional<Quantifier> getQuantifier(Integer index, String context) {
-        return Optional.empty();
     }
 
 }
