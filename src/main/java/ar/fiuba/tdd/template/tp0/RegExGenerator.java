@@ -32,7 +32,11 @@ public class RegExGenerator {
         final List<Token> tokens = this.tokenizer.tokenize(regEx);
         tokens.size();
 
-        return new ArrayList<>();
+        ArrayList<String> response = new ArrayList<>();
+        response.add("a");
+
+
+        return response;
 //        return range(0, numberOfResults).boxed().map(i -> this.generate(tokens)).collect(toList());
     }
 

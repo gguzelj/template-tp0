@@ -68,8 +68,9 @@ public class Helper {
     }
 
     public static Boolean hasToEmitLiteralToken(Integer index, Character character, String context) {
-        if (isEscaped(index, context))
+        if (isEscaped(index, context)) {
             return Boolean.FALSE;
+        }
         return (isLiteral(character) || isEscape(character)) && isNotInsideGroup(index, context);
     }
 
@@ -80,5 +81,12 @@ public class Helper {
         return range(0, substring.length()).boxed()
                 .map(substring::charAt)
                 .collect(toSet());
+    }
+
+    public static Character getLiteral(Integer index, Character character, String context) {
+        if (isEscape(character)) {
+            return context.charAt(index + 1);
+        }
+        return character;
     }
 }

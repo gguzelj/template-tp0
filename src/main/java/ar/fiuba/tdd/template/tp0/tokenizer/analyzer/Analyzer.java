@@ -55,10 +55,14 @@ public class Analyzer {
             case GROUP:
                 return emitGroupToken(quantifier, this.determineSet(index, context));
             case LITERAL:
-                return emitLiteralToken(quantifier);
+                return emitLiteralToken(quantifier, this.determineLiteral(index, character, context));
             default:
                 throw new IllegalStateException("Unknown token type " + tokenType);
         }
+    }
+
+    private Character determineLiteral(Integer index, Character character, String context) {
+        return getLiteral(index, character, context);
     }
 
     private Set<Character> determineSet(Integer index, String context) {
@@ -76,11 +80,11 @@ public class Analyzer {
     }
 
     private Optional<Token> emitGroupToken(Optional<Quantifier> quantifier, Set<Character> characterSet) {
-        return Optional.of(new GroupToken(quantifier, characterSet));
+        return Optional.of(new GroupToken(characterSet, quantifier));
     }
 
-    private Optional<Token> emitLiteralToken(Optional<Quantifier> quantifier) {
-        return Optional.of(new LiteralToken(quantifier));
+    private Optional<Token> emitLiteralToken(Optional<Quantifier> quantifier, Character literal) {
+        return Optional.of(new LiteralToken(literal, quantifier));
     }
 
 }

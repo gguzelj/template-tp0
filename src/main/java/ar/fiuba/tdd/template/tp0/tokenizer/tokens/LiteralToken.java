@@ -8,8 +8,10 @@ import java.util.Optional;
 
 public class LiteralToken implements Token {
     private final Optional<Quantifier> quantifier;
+    private final Character literal;
 
-    public LiteralToken(Optional<Quantifier> quantifier) {
+    public LiteralToken(Character literal, Optional<Quantifier> quantifier) {
+        this.literal = literal;
         this.quantifier = quantifier;
     }
 

@@ -12,7 +12,7 @@ public class GroupToken implements Token {
     private final Optional<Quantifier> quantifier;
     private final Set<Character> characterSet;
 
-    public GroupToken(Optional<Quantifier> quantifier, Set<Character> characterSet) {
+    public GroupToken(Set<Character> characterSet, Optional<Quantifier> quantifier) {
         this.quantifier = quantifier;
         this.characterSet = characterSet;
     }

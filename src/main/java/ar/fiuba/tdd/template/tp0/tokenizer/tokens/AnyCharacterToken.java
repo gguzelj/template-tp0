@@ -8,7 +8,10 @@ import java.util.Optional;
 
 public class AnyCharacterToken implements Token {
 
+    private final Optional<Quantifier> quantifier;
+
     public AnyCharacterToken(Optional<Quantifier> quantifier) {
+        this.quantifier = quantifier;
     }
 
     @Override
