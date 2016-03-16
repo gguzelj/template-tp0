@@ -2,6 +2,7 @@ package ar.fiuba.tdd.template.tp0.tokenizer.analyzer;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Token;
 import ar.fiuba.tdd.template.tp0.tokenizer.TokenType;
+import ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.tokens.AnyCharacterToken;
@@ -9,15 +10,18 @@ import ar.fiuba.tdd.template.tp0.tokenizer.tokens.GroupToken;
 import ar.fiuba.tdd.template.tp0.tokenizer.tokens.LiteralToken;
 
 import java.util.Optional;
+import java.util.Set;
 
-import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Helper.*;
+import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.*;
 
 public class Analyzer {
 
     private final QuantifierResolver quantifierResolver;
+    private final TokenTypeResolver tokenTypeResolver;
 
-    public Analyzer(QuantifierResolver quantifierResolver) {
+    public Analyzer(QuantifierResolver quantifierResolver, TokenTypeResolver tokenTypeResolver) {
         this.quantifierResolver = quantifierResolver;
+        this.tokenTypeResolver = tokenTypeResolver;
     }
 
     /**
@@ -42,14 +46,14 @@ public class Analyzer {
     }
 
     private Optional<Token> getToken(Integer index, Character character, String context) {
-        final TokenType tokenType = this.determineTokenType(index, character, context);
+        final TokenType tokenType = this.tokenTypeResolver.resolve(index, character, context);
         final Optional<Quantifier> quantifier = this.quantifierResolver.resolve(index, context);
 
         switch (tokenType) {
             case ANY_CHARACTER:
                 return emitAnyCharacterToken(quantifier);
             case GROUP:
-                return emitGroupToken(quantifier);
+                return emitGroupToken(quantifier, this.determineSet(index, context));
             case LITERAL:
                 return emitLiteralToken(quantifier);
             default:
@@ -57,17 +61,8 @@ public class Analyzer {
         }
     }
 
-    private TokenType determineTokenType(Integer index, Character character, String context) {
-        if (hasToEmitAnyCharacterToken(index, character, context)) {
-            return TokenType.ANY_CHARACTER;
-        }
-
-        if (hasToEmitGroupToken(index, character, context)) {
-            checkIllegalCharactersInGroup(index, context);
-            return TokenType.GROUP;
-        }
-
-        return TokenType.LITERAL;
+    private Set<Character> determineSet(Integer index, String context) {
+        return getCharacterSetForGroup(index, context);
     }
 
     private Boolean hasToEmit(Integer index, Character character, String context) {
@@ -76,30 +71,12 @@ public class Analyzer {
                 || hasToEmitLiteralToken(index, character, context);
     }
 
-    private Boolean hasToEmitAnyCharacterToken(Integer index, Character character, String context) {
-        return isAnyCharacter(character) && isNotEscaped(index, context);
-    }
-
-    private Boolean hasToEmitGroupToken(Integer index, Character character, String context) {
-        return isGroup(character) && isNotEscaped(index, context);
-    }
-
-    private Boolean hasToEmitLiteralToken(Integer index, Character character, String context) {
-        return (isLiteral(character) || isEscaped(index, context) ) && isNotInsideGroup(index, context);
-    }
-
-    private void checkIllegalCharactersInGroup(Integer index, String context) {
-//        Integer to = context.indexOf(CLOSE_SQUARE_BRACKET, index);
-//        String group = context.substring(index, to);
-
-    }
-
     private Optional<Token> emitAnyCharacterToken(Optional<Quantifier> quantifier) {
         return Optional.of(new AnyCharacterToken(quantifier));
     }
 
-    private Optional<Token> emitGroupToken(Optional<Quantifier> quantifier) {
-        return Optional.of(new GroupToken(quantifier));
+    private Optional<Token> emitGroupToken(Optional<Quantifier> quantifier, Set<Character> characterSet) {
+        return Optional.of(new GroupToken(quantifier, characterSet));
     }
 
     private Optional<Token> emitLiteralToken(Optional<Quantifier> quantifier) {

@@ -30,7 +30,10 @@ public class RegExGenerator {
         }
 
         final List<Token> tokens = this.tokenizer.tokenize(regEx);
-        return range(0, numberOfResults).boxed().map(i -> this.generate(tokens)).collect(toList());
+        tokens.size();
+
+        return new ArrayList<>();
+//        return range(0, numberOfResults).boxed().map(i -> this.generate(tokens)).collect(toList());
     }
 
     private String generate(List<Token> tokens) {

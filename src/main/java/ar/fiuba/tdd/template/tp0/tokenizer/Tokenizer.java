@@ -28,7 +28,7 @@ public class Tokenizer {
     }
 
     private List<Optional<Token>> createTokens(String regex) {
-        return IntStream.range(0, regex.length()).boxed()
+        return range(0, regex.length()).boxed()
                 .map(index -> this.analyzer.resolveToken(index, regex.charAt(index), regex))
                 .collect(toList());
     }

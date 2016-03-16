@@ -4,6 +4,7 @@ import ar.fiuba.tdd.template.tp0.generator.Generator;
 import ar.fiuba.tdd.template.tp0.generator.GeneratorResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
+import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.TokenTypeResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver;
 import org.junit.Test;
 
@@ -32,12 +33,12 @@ public class RegExGeneratorTest {
     //TODO: Uncomment these tests
     @Test
     public void testAnyCharacter() {
-//        assertTrue(validate("..+[ab]*d?c", 1));
-        assertTrue(Boolean.TRUE);
+        assertTrue(validate("..+[ab]*d?c", 1));
+//        assertTrue(Boolean.TRUE);
     }
 
     // TODO: Add more tests!!!
-/*
+
     @Test
     public void testMultipleCharacters() {
         assertTrue(validate("...", 1));
@@ -67,10 +68,11 @@ public class RegExGeneratorTest {
     public void testCharacterSetWithQuantifiers() {
         assertTrue(validate("[abc]+", 1));
     }
-    */
+
     private RegExGenerator newRegExGenerator(int numberOfResults) {
         QuantifierResolver quantifierResolver = new QuantifierResolver();
-        Analyzer analyzer = new Analyzer(quantifierResolver);
+        TokenTypeResolver tokenTypeResolver = new TokenTypeResolver();
+        Analyzer analyzer = new Analyzer(quantifierResolver, tokenTypeResolver);
         Tokenizer tokenizer = new Tokenizer(analyzer);
         GeneratorResolver generatorResolver = new GeneratorResolver();
         Generator generator = new Generator(generatorResolver);

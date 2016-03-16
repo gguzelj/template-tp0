@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Helper.CLOSE_SQUARE_BRACKET;
-import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Helper.isGroup;
+import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.CLOSE_SQUARE_BRACKET;
+import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isGroup;
 
 public class QuantifierResolver {
 
