@@ -17,6 +17,11 @@ public class Helper {
     public static Boolean isInsideGroup(Integer index, String context) {
         Integer close = context.indexOf(CLOSE_SQUARE_BRACKET, index);
         Integer open = context.substring(0, index).lastIndexOf(OPEN_SQUARE_BRACKET);
+
+        if (open == -1) {
+            return Boolean.FALSE;
+        }
+
         return open < index  && index < close;
     }
 

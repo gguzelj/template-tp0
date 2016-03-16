@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Helper.CLOSE_SQUARE_BRACKET;
-import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Helper.isInsideGroup;
+import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Helper.isGroup;
 
 public class QuantifierResolver {
 
@@ -29,11 +29,11 @@ public class QuantifierResolver {
 
     public Optional<Quantifier> resolve(Integer index, String context) {
 
-        if (isInsideGroup(index, context)) {
+        if (isGroup(context.charAt(index))) {
             return this.getQuantifierForGroup(index, context);
         }
 
-        if (isQuantifier(nextChar(index, context))) {
+        if (hasQuantifier(index, context)) {
             return this.resolve(nextChar(index, context));
         }
 
@@ -49,8 +49,12 @@ public class QuantifierResolver {
         return resolve(endOfGroup, context);
     }
 
-    private Boolean isQuantifier(String character) {
-        return quantifiers.containsKey(character);
+    private Boolean hasQuantifier(Integer index, String context) {
+        if (context.length() == index + 1) {
+            return Boolean.FALSE;
+        }
+
+        return quantifiers.containsKey(nextChar(index, context));
     }
 
     private String nextChar(Integer index, String context) {

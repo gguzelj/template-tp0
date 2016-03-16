@@ -6,7 +6,7 @@ public class LiteralGenerator implements StringGenerator {
 
     @Override
     public String generate(Token token) {
-        return null;
+        return "";
     }
 
     private Integer getLength(Token token) {
