@@ -31,8 +31,8 @@ public class LiteralState implements State {
 
     //TODO
     private Optional<Token> newToken(Context context) {
-        Character character = context.getCharacter();
-        Optional<Quantifier> quantifier = QuantifierResolver.resolve(context);
+        final Character character = context.getCharacter();
+        final Optional<Quantifier> quantifier = QuantifierResolver.resolve(context);
         return Optional.of(new LiteralToken(character, quantifier));
     }
 

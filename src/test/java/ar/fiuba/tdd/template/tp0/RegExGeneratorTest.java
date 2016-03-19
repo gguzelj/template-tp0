@@ -4,6 +4,7 @@ import ar.fiuba.tdd.template.tp0.generator.Generator;
 import ar.fiuba.tdd.template.tp0.generator.GeneratorResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -26,11 +27,12 @@ public class RegExGeneratorTest {
                 .allMatch(match -> match == Boolean.TRUE);
     }
 
-    /*
     @Test
     public void testAnyCharacter() {
-        assertTrue(validate("..+[ab]*d?c", 1));
+//        assertTrue(validate("..+[ab]*d?c", 1));
     }
+
+    /*
 
     @Test
     public void testMultipleCharacters() {

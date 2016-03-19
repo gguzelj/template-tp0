@@ -11,17 +11,19 @@ import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
 import java.util.Optional;
 import java.util.Set;
 
-import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isCloseBracket;
-import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isGroup;
+import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.*;
+import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver.isQuantifier;
 
 public class GroupState implements State {
 
-    private static final String ILLEGAL_CHARACTERS = "[";
+    private static final String ILLEGAL_CHARACTERS = "[]()";
 
     @Override
     public Optional<Token> resolveToken(Context context, Analyzer analyzer) {
 
-        if (isCloseBracket(context)) {
+        checkGroup(context);
+
+        if (isQuantifier(context) || previousCharacterEndsGroup(context)) {
             analyzer.setState(new DefaultState());
             return newToken(context);
         }
@@ -29,8 +31,38 @@ public class GroupState implements State {
         return Optional.empty();
     }
 
+    private Boolean previousCharacterEndsGroup(Context context) {
+        Optional<Character> previousCharacter = context.getPreviousCharacter();
+
+        if (!previousCharacter.isPresent()) {
+            return Boolean.FALSE;
+        }
+
+        return isCloseBracket(previousCharacter.get());
+    }
+
+    private void checkGroup(Context context) {
+        if (isOpenBracket(context)) {
+
+            Set<Character> set = getCharacterSetForGroup(context);
+            if (set.isEmpty()) {
+                throw new IllegalArgumentException("Empty group!");
+            }
+
+            set.forEach(this::checkCharacter);
+
+        }
+    }
+
+    private void checkCharacter(Character character) {
+        if ((ILLEGAL_CHARACTERS.indexOf(character) != -1)
+                || isQuantifier(character)) {
+            throw new IllegalArgumentException("Illegal character in group");
+        }
+    }
+
     private Optional<Token> newToken(Context context) {
-        Set<Character> group = Helper.getCharacterSetForGroup(context);
+        Set<Character> group = getCharacterSetForGroup(context);
         Optional<Quantifier> quantifier = QuantifierResolver.resolve(context);
 
         return Optional.of(new GroupToken(group, quantifier));

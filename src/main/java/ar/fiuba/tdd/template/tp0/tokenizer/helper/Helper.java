@@ -1,6 +1,8 @@
 package ar.fiuba.tdd.template.tp0.tokenizer.helper;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver;
 
 import java.util.Set;
 
@@ -20,21 +22,6 @@ public class Helper {
 
     public static Boolean isLiteral(Character character) {
         return POSSIBLE_CHARACTERS.indexOf(character) != -1;
-    }
-
-    public static Boolean isInsideGroup(Integer index, String context) {
-        Integer close = context.indexOf(CLOSE_SQUARE_BRACKET, index);
-        Integer open = context.substring(0, index).lastIndexOf(OPEN_SQUARE_BRACKET);
-
-        if (open == -1) {
-            return Boolean.FALSE;
-        }
-
-        return open < index  && index < close;
-    }
-
-    public static Boolean isNotInsideGroup(Integer index, String context) {
-        return !isInsideGroup(index, context);
     }
 
     public static Boolean isGroup(Context context) {
@@ -60,10 +47,6 @@ public class Helper {
         return character.equals(ESCAPE);
     }
 
-    public static Boolean isNotEscaped(Integer index, String context) {
-        return !isEscaped(index, context);
-    }
-
     public static Set<Character> getCharacterSetForGroup(Context context) {
         final Integer close = context.getRegex().indexOf(CLOSE_SQUARE_BRACKET, context.getIndex());
         final String substring = context.getRegex().substring(context.getIndex() + 1, close);
@@ -73,19 +56,16 @@ public class Helper {
                 .collect(toSet());
     }
 
-    public static Character getLiteral(Integer index, Character character, String context) {
-        if (isEscape(character)) {
-            return context.charAt(index + 1);
-        }
-        return character;
-    }
-
     public static Boolean isQuantifier(Context context) {
-        return Boolean.TRUE;
+        return QuantifierResolver.isQuantifier(context);
     }
 
-    public static Boolean isCloseBracket(Context context) {
-        return CLOSE_SQUARE_BRACKET.equals(context.getCharacter());
+    public static Boolean isCloseBracket(Character character) {
+        return CLOSE_SQUARE_BRACKET.equals(character);
+    }
+
+    public static Boolean isOpenBracket(Context context) {
+        return OPEN_SQUARE_BRACKET.equals(context.getCharacter());
     }
 
 }

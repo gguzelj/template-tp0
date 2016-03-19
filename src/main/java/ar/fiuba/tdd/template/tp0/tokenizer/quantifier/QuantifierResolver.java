@@ -10,15 +10,15 @@ import java.util.Map;
 import java.util.Optional;
 
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.CLOSE_SQUARE_BRACKET;
-import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isGroup;
+import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isQuantifier;
 
 public class QuantifierResolver {
 
-    private static final String PLUS = "+";
-    private static final String ASTERISK = "*";
-    private static final String QUESTION_MARK = "?";
+    private static final Character PLUS = '+';
+    private static final Character ASTERISK = '*';
+    private static final Character QUESTION_MARK = '?';
 
-    private static final Map<String, Quantifier> quantifiers;
+    private static final Map<Character, Quantifier> quantifiers;
 
     static {
         quantifiers = new HashMap<>();
@@ -29,40 +29,35 @@ public class QuantifierResolver {
     }
 
     public static Optional<Quantifier> resolve(Context context) {
-        return resolve(context.getIndex(), context.getRegex());
+        return (hasQuantifier(context)) ? getNextQuantifier(context) : Optional.empty();
     }
 
-    public static Optional<Quantifier> resolve(Integer index, String regex) {
-
-        if (isGroup(regex.charAt(index))) {
-            return getQuantifierForGroup(index, regex);
-        }
-
-        if (hasQuantifier(index, regex)) {
-            return resolve(nextChar(index, regex));
-        }
-
-        return Optional.empty();
-    }
-
-    private static Optional<Quantifier> resolve(String quantifier) {
-        return Optional.of(quantifiers.get(quantifier));
-    }
-
-    private static Optional<Quantifier> getQuantifierForGroup(Integer index, String context) {
-        Integer endOfGroup = context.indexOf(CLOSE_SQUARE_BRACKET, index);
-        return resolve(endOfGroup, context);
-    }
-
-    private static Boolean hasQuantifier(Integer index, String context) {
-        if (context.length() == index + 1) {
+    public static Boolean hasQuantifier(Context context) {
+        Optional<Character> nextCharacter = context.getNextCharacter();
+        if (!nextCharacter.isPresent()) {
             return Boolean.FALSE;
         }
-
-        return quantifiers.containsKey(nextChar(index, context));
+        return quantifiers.containsKey(nextCharacter.get());
     }
 
-    private static String nextChar(Integer index, String context) {
-        return "" + context.charAt(index + 1);
+    public static Optional<Quantifier> getNextQuantifier(Context context) {
+        final String regex = context.getRegex();
+        final Integer index = context.getIndex();
+        final String substring = regex.substring(index, regex.length());
+
+        return substring.chars().mapToObj(i -> (char) i)
+                .filter(quantifiers::containsKey)
+                .map(quantifiers::get)
+                .findFirst();
     }
+
+
+    public static Boolean isQuantifier(Context context) {
+        return isQuantifier(context.getCharacter());
+    }
+    
+    public static Boolean isQuantifier(Character character) {
+        return quantifiers.containsKey(character);
+    }
+
 }
