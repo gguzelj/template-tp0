@@ -1,12 +1,10 @@
 package ar.fiuba.tdd.template.tp0.tokenizer.helper;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver;
 
 import java.util.Set;
 
-import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.IntStream.range;
 
@@ -19,6 +17,10 @@ public class Helper {
     public static final Character OPEN_SQUARE_BRACKET = '[';
     public static final Character CLOSE_SQUARE_BRACKET = ']';
 
+
+    public static Boolean isLiteral(Context context) {
+        return isLiteral(context.getCharacter());
+    }
 
     public static Boolean isLiteral(Character character) {
         return POSSIBLE_CHARACTERS.indexOf(character) != -1;
@@ -33,18 +35,27 @@ public class Helper {
     }
 
     public static Boolean isDot(Context context) {
-        return DOT.equals(context.getCharacter());
+        return isDot(context.getCharacter());
     }
 
-    public static Boolean isEscaped(Integer index, String context) {
-        if (index == 0) {
-            return Boolean.FALSE;
-        }
-        return isEscape(context.charAt(index - 1));
+    public static Boolean isDot(Character character) {
+        return DOT.equals(character);
+    }
+
+    public static Boolean isEscape(Context context) {
+        return isEscape(context.getCharacter());
     }
 
     public static Boolean isEscape(Character character) {
-        return character.equals(ESCAPE);
+        return ESCAPE.equals(character);
+    }
+
+    public static Boolean isCloseBracket(Character character) {
+        return CLOSE_SQUARE_BRACKET.equals(character);
+    }
+
+    public static Boolean isOpenBracket(Context context) {
+        return OPEN_SQUARE_BRACKET.equals(context.getCharacter());
     }
 
     public static Set<Character> getCharacterSetForGroup(Context context) {
@@ -54,18 +65,6 @@ public class Helper {
         return range(0, substring.length()).boxed()
                 .map(substring::charAt)
                 .collect(toSet());
-    }
-
-    public static Boolean isQuantifier(Context context) {
-        return QuantifierResolver.isQuantifier(context);
-    }
-
-    public static Boolean isCloseBracket(Character character) {
-        return CLOSE_SQUARE_BRACKET.equals(character);
-    }
-
-    public static Boolean isOpenBracket(Context context) {
-        return OPEN_SQUARE_BRACKET.equals(context.getCharacter());
     }
 
 }

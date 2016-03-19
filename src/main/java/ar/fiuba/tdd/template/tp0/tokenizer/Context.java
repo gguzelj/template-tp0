@@ -26,11 +26,19 @@ public class Context {
         return regex;
     }
 
+    public Boolean hasNextCharacter() {
+        return getNextCharacter().isPresent();
+    }
+
     public Optional<Character> getNextCharacter() {
         if (this.index == regex.length() - 1) {
             return Optional.empty();
         }
         return Optional.of(regex.charAt(index + 1));
+    }
+
+    public Boolean hasPreviousCharacter() {
+        return getPreviousCharacter().isPresent();
     }
 
     public Optional<Character> getPreviousCharacter() {

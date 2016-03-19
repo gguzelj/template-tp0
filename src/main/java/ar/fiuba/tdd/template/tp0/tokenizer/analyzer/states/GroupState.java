@@ -2,9 +2,8 @@ package ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
-import ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.tokens.GroupToken;
 import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
 
@@ -13,7 +12,7 @@ import java.util.Set;
 
 import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver.DEFAULT_STATE;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.*;
-import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver.isQuantifier;
+import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver.isQuantifier;
 
 public class GroupState implements State {
 
@@ -34,13 +33,11 @@ public class GroupState implements State {
     }
 
     private Boolean previousCharacterEndsGroup(Context context) {
-        Optional<Character> previousCharacter = context.getPreviousCharacter();
-
-        if (!previousCharacter.isPresent()) {
+        if (!context.hasPreviousCharacter()) {
             return Boolean.FALSE;
         }
 
-        return isCloseBracket(previousCharacter.get());
+        return isCloseBracket(context.getPreviousCharacter().get());
     }
 
     private void checkGroup(Context context) {
@@ -55,8 +52,7 @@ public class GroupState implements State {
     }
 
     private void checkCharacter(Character character) {
-        if ((ILLEGAL_CHARACTERS.indexOf(character) != -1)
-                || isQuantifier(character)) {
+        if ((ILLEGAL_CHARACTERS.indexOf(character) != -1) || isQuantifier(character)) {
             throw new IllegalArgumentException("Illegal character in group");
         }
     }

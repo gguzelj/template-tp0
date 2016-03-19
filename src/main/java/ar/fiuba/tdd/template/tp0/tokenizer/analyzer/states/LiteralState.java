@@ -2,18 +2,18 @@ package ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
-import ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.tokens.LiteralToken;
 import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
 
 import java.util.Optional;
 
 import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver.DEFAULT_STATE;
+import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isEscape;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isLiteral;
-import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver.hasQuantifier;
-import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver.isQuantifier;
+import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver.hasQuantifier;
+import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver.isQuantifier;
 
 public class LiteralState implements State {
 
@@ -22,7 +22,7 @@ public class LiteralState implements State {
 
         checkContext(context);
 
-        if (context.getCharacter().equals('\\') || hasQuantifier(context)) {
+        if (isEscape(context) || hasQuantifier(context)) {
             return Optional.empty();
         }
 
@@ -35,7 +35,7 @@ public class LiteralState implements State {
     }
 
     private void checkContext(Context context) {
-        if (context.getCharacter().equals('\\') && !context.getNextCharacter().isPresent()) {
+        if (isEscape(context) && !context.hasNextCharacter()) {
             throw new IllegalArgumentException("Regex can't end with \\");
         }
     }
@@ -56,7 +56,7 @@ public class LiteralState implements State {
 
     @Override
     public Boolean supports(Context context) {
-        return isLiteral(context.getCharacter());
+        return isLiteral(context) || isEscape(context);
     }
 
 }

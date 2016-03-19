@@ -1,6 +1,7 @@
-package ar.fiuba.tdd.template.tp0.tokenizer.quantifier;
+package ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.quantifiers.AsteriskQuantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.quantifiers.PlusQuantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.quantifiers.QuestionMarkQuantifier;
@@ -8,9 +9,6 @@ import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.quantifiers.QuestionMarkQu
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
-import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.CLOSE_SQUARE_BRACKET;
-import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isQuantifier;
 
 public class QuantifierResolver {
 
@@ -33,11 +31,10 @@ public class QuantifierResolver {
     }
 
     public static Boolean hasQuantifier(Context context) {
-        Optional<Character> nextCharacter = context.getNextCharacter();
-        if (!nextCharacter.isPresent()) {
+        if (!context.hasNextCharacter()) {
             return Boolean.FALSE;
         }
-        return quantifiers.containsKey(nextCharacter.get());
+        return quantifiers.containsKey(context.getNextCharacter().get());
     }
 
     public static Optional<Quantifier> getNextQuantifier(Context context) {

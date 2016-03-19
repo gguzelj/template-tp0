@@ -7,7 +7,7 @@ import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
 
 import java.util.Optional;
 
-import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isQuantifier;
+import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver.isQuantifier;
 
 public class DefaultState implements State {
 
