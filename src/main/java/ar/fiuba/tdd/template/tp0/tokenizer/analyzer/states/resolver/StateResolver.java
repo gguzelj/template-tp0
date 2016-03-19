@@ -8,8 +8,9 @@ import java.util.List;
 
 public class StateResolver {
 
+    public static final State DEFAULT_STATE = new DefaultState();
+
     private static final List<State> states;
-    private static final State DEFAULT_STATE = new DefaultState();
     private static final State ANY_CHARACTER_STATE = new AnyCharacterState();
     private static final State GROUP_STATE = new GroupState();
     private static final State LITERAL_STATE = new LiteralState();

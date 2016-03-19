@@ -11,6 +11,7 @@ import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
 import java.util.Optional;
 import java.util.Set;
 
+import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver.DEFAULT_STATE;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.*;
 import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver.isQuantifier;
 
@@ -25,7 +26,7 @@ public class GroupState implements State {
         checkGroup(context);
 
         if (isQuantifier(context) || previousCharacterEndsGroup(context)) {
-            analyzer.setState(new DefaultState());
+            analyzer.setState(DEFAULT_STATE);
             return newToken(context);
         }
 

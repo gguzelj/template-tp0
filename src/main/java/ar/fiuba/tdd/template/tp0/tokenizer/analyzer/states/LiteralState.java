@@ -10,6 +10,7 @@ import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
 
 import java.util.Optional;
 
+import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver.DEFAULT_STATE;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isLiteral;
 import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver.hasQuantifier;
 import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver.isQuantifier;
@@ -26,7 +27,7 @@ public class LiteralState implements State {
         }
 
         if (isQuantifier(context) || !hasQuantifier(context)) {
-            analyzer.setState(new DefaultState());
+            analyzer.setState(DEFAULT_STATE);
             return newToken(context);
         }
 

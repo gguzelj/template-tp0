@@ -17,12 +17,14 @@ public class RegExGeneratorTest {
         RegExGenerator generator = newRegExGenerator(numberOfResults);
 
         List<String> results = generator.generate(regEx, numberOfResults);
+        if (results.size() != numberOfResults) {
+            return Boolean.FALSE;
+        }
 
         // force matching the beginning and the end of the strings
         Pattern pattern = Pattern.compile("^" + regEx + "$");
 
-        return ( results.size() == numberOfResults )
-                && results.stream()
+        return results.stream()
                 .map(result -> pattern.matcher(result).find())
                 .allMatch(match -> match == Boolean.TRUE);
     }
