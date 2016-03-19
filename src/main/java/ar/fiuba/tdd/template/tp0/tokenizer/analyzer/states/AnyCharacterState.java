@@ -24,7 +24,6 @@ public class AnyCharacterState implements State {
         return newToken(context);
     }
 
-    //TODO
     private Optional<Token> newToken(Context context) {
         return Optional.of(new AnyCharacterToken(QuantifierResolver.resolve(context)));
     }

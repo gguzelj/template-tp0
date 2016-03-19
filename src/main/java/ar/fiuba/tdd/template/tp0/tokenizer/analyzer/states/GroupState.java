@@ -17,6 +17,7 @@ import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver.
 public class GroupState implements State {
 
     private static final String ILLEGAL_CHARACTERS = "[]()";
+    private Set<Character> group;
 
     @Override
     public Optional<Token> resolveToken(Context context, Analyzer analyzer) {
@@ -43,14 +44,12 @@ public class GroupState implements State {
 
     private void checkGroup(Context context) {
         if (isOpenBracket(context)) {
-
-            Set<Character> set = getCharacterSetForGroup(context);
-            if (set.isEmpty()) {
+            this.group = getCharacterSetForGroup(context);
+            if (this.group.isEmpty()) {
                 throw new IllegalArgumentException("Empty group!");
             }
 
-            set.forEach(this::checkCharacter);
-
+            this.group.forEach(this::checkCharacter);
         }
     }
 
@@ -62,7 +61,7 @@ public class GroupState implements State {
     }
 
     private Optional<Token> newToken(Context context) {
-        Set<Character> group = getCharacterSetForGroup(context);
+        Set<Character> group = this.group;
         Optional<Quantifier> quantifier = QuantifierResolver.resolve(context);
 
         return Optional.of(new GroupToken(group, quantifier));

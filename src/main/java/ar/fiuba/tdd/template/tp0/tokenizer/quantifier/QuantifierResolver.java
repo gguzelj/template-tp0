@@ -29,7 +29,7 @@ public class QuantifierResolver {
     }
 
     public static Optional<Quantifier> resolve(Context context) {
-        return (hasQuantifier(context)) ? getNextQuantifier(context) : Optional.empty();
+        return (isQuantifier(context)) ? getNextQuantifier(context) : Optional.empty();
     }
 
     public static Boolean hasQuantifier(Context context) {

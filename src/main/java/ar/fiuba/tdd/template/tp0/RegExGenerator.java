@@ -1,10 +1,10 @@
 package ar.fiuba.tdd.template.tp0;
 
 import ar.fiuba.tdd.template.tp0.generator.Generator;
-import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
 import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
+import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
 
-import java.util.List;
+import java.util.*;
 
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
@@ -28,6 +28,7 @@ public class RegExGenerator {
         if (isNull(regEx) || isNull(numberOfResults)) {
             throw new IllegalArgumentException("Regex or number of results can't be empty");
         }
+
         return generate(this.tokenizer.tokenize(regEx), numberOfResults);
     }
 
