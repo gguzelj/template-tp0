@@ -1,7 +1,5 @@
 package ar.fiuba.tdd.template.tp0.tokenizer.tokens;
 
-import ar.fiuba.tdd.template.tp0.tokenizer.Token;
-import ar.fiuba.tdd.template.tp0.tokenizer.TokenType;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
 
 import java.util.Optional;

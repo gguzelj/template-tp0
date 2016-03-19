@@ -1,15 +1,12 @@
 package ar.fiuba.tdd.template.tp0.tokenizer;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
+import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
 
-import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 import static java.util.stream.IntStream.range;
 
 public class Tokenizer {
@@ -29,8 +26,12 @@ public class Tokenizer {
 
     private List<Optional<Token>> createTokens(String regex) {
         return range(0, regex.length()).boxed()
-                .map(index -> this.analyzer.resolveToken(index, regex.charAt(index), regex))
+                .map(index -> this.analyzer.resolveToken(newContext(index, regex)))
                 .collect(toList());
+    }
+
+    private Context newContext(Integer index, String regex) {
+        return new Context(index, regex.charAt(index), regex);
     }
 
 }

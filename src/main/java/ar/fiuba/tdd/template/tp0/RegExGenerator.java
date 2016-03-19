@@ -1,10 +1,10 @@
 package ar.fiuba.tdd.template.tp0;
 
 import ar.fiuba.tdd.template.tp0.generator.Generator;
-import ar.fiuba.tdd.template.tp0.tokenizer.Token;
 import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
+import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
 
-import java.util.*;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
@@ -28,22 +28,14 @@ public class RegExGenerator {
         if (isNull(regEx) || isNull(numberOfResults)) {
             throw new IllegalArgumentException("Regex or number of results can't be empty");
         }
+        return generate(this.tokenizer.tokenize(regEx), numberOfResults);
+    }
 
-        final List<Token> tokens = this.tokenizer.tokenize(regEx);
-        tokens.size();
-
-        ArrayList<String> response = new ArrayList<>();
-        response.add("a");
-
-
-        return response;
-//        return range(0, numberOfResults).boxed().map(i -> this.generate(tokens)).collect(toList());
+    private List<String> generate(List<Token> tokens, Integer numberOfResults) {
+        return range(0, numberOfResults).boxed().map(i -> this.generate(tokens)).collect(toList());
     }
 
     private String generate(List<Token> tokens) {
-        if (isNull(tokens)) {
-            throw new IllegalStateException("No tokens provided to generate string");
-        }
         return convertResults(this.generator.generate(tokens));
     }
 

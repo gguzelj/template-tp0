@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.template.tp0.tokenizer.quantifier;
 
+import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.quantifiers.AsteriskQuantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.quantifiers.PlusQuantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.quantifiers.QuestionMarkQuantifier;
@@ -27,29 +28,33 @@ public class QuantifierResolver {
         quantifiers.put(QUESTION_MARK, new QuestionMarkQuantifier());
     }
 
-    public Optional<Quantifier> resolve(Integer index, String context) {
+    public static Optional<Quantifier> resolve(Context context) {
+        return resolve(context.getIndex(), context.getRegex());
+    }
 
-        if (isGroup(context.charAt(index))) {
-            return this.getQuantifierForGroup(index, context);
+    public static Optional<Quantifier> resolve(Integer index, String regex) {
+
+        if (isGroup(regex.charAt(index))) {
+            return getQuantifierForGroup(index, regex);
         }
 
-        if (hasQuantifier(index, context)) {
-            return this.resolve(nextChar(index, context));
+        if (hasQuantifier(index, regex)) {
+            return resolve(nextChar(index, regex));
         }
 
         return Optional.empty();
     }
 
-    private Optional<Quantifier> resolve(String quantifier) {
+    private static Optional<Quantifier> resolve(String quantifier) {
         return Optional.of(quantifiers.get(quantifier));
     }
 
-    private Optional<Quantifier> getQuantifierForGroup(Integer index, String context) {
+    private static Optional<Quantifier> getQuantifierForGroup(Integer index, String context) {
         Integer endOfGroup = context.indexOf(CLOSE_SQUARE_BRACKET, index);
         return resolve(endOfGroup, context);
     }
 
-    private Boolean hasQuantifier(Integer index, String context) {
+    private static Boolean hasQuantifier(Integer index, String context) {
         if (context.length() == index + 1) {
             return Boolean.FALSE;
         }
@@ -57,7 +62,7 @@ public class QuantifierResolver {
         return quantifiers.containsKey(nextChar(index, context));
     }
 
-    private String nextChar(Integer index, String context) {
+    private static String nextChar(Integer index, String context) {
         return "" + context.charAt(index + 1);
     }
 }

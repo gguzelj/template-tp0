@@ -4,12 +4,8 @@ import ar.fiuba.tdd.template.tp0.generator.Generator;
 import ar.fiuba.tdd.template.tp0.generator.GeneratorResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
-import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.TokenTypeResolver;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierResolver;
-import org.junit.Test;
 
 import java.util.List;
-import java.util.function.BinaryOperator;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertTrue;
@@ -67,13 +63,18 @@ public class RegExGeneratorTest {
     }
 */
     private RegExGenerator newRegExGenerator(int numberOfResults) {
-        QuantifierResolver quantifierResolver = new QuantifierResolver();
-        TokenTypeResolver tokenTypeResolver = new TokenTypeResolver();
-        Analyzer analyzer = new Analyzer(quantifierResolver, tokenTypeResolver);
-        Tokenizer tokenizer = new Tokenizer(analyzer);
-        GeneratorResolver generatorResolver = new GeneratorResolver();
-        Generator generator = new Generator(generatorResolver);
+        Tokenizer tokenizer = newTokenizer();
+        Generator generator = newGenerator();
         return new RegExGenerator(tokenizer, generator, numberOfResults);
+    }
+
+    private Generator newGenerator() {
+        GeneratorResolver generatorResolver = new GeneratorResolver();
+        return new Generator(generatorResolver);
+    }
+
+    private Tokenizer newTokenizer() {
+        return new Tokenizer(new Analyzer());
     }
 
 }

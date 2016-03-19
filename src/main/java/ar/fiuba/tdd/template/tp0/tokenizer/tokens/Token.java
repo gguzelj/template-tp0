@@ -1,10 +1,8 @@
-package ar.fiuba.tdd.template.tp0.tokenizer;
+package ar.fiuba.tdd.template.tp0.tokenizer.tokens;
 
 public interface Token {
 
     TokenType getType();
-
-//    Optional<Quantifier> getQuantifier();
 
 //    Set<Character> getLiterals();
 

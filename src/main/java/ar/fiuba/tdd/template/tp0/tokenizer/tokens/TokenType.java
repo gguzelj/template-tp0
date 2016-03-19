@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.template.tp0.tokenizer;
+package ar.fiuba.tdd.template.tp0.tokenizer.tokens;
 
 /**
  * Enum that represents all types of tokens managed:

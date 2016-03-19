@@ -1,9 +1,10 @@
 package ar.fiuba.tdd.template.tp0.tokenizer.helper;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 
+import java.util.Set;
+
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.IntStream.range;
 
@@ -36,12 +37,16 @@ public class Helper {
         return !isInsideGroup(index, context);
     }
 
+    public static Boolean isGroup(Context context) {
+        return isGroup(context.getCharacter());
+    }
+
     public static Boolean isGroup(Character character) {
         return character.equals(OPEN_SQUARE_BRACKET);
     }
 
-    public static Boolean isDot(Character character) {
-        return character.equals(DOT);
+    public static Boolean isDot(Context context) {
+        return DOT.equals(context.getCharacter());
     }
 
     public static Boolean isEscaped(Integer index, String context) {
@@ -59,24 +64,9 @@ public class Helper {
         return !isEscaped(index, context);
     }
 
-    public static Boolean hasToEmitAnyCharacterToken(Integer index, Character character, String context) {
-        return isDot(character) && isNotEscaped(index, context);
-    }
-
-    public static Boolean hasToEmitGroupToken(Integer index, Character character, String context) {
-        return isGroup(character) && isNotEscaped(index, context);
-    }
-
-    public static Boolean hasToEmitLiteralToken(Integer index, Character character, String context) {
-        if (isEscaped(index, context)) {
-            return Boolean.FALSE;
-        }
-        return (isLiteral(character) || isEscape(character)) && isNotInsideGroup(index, context);
-    }
-
-    public static Set<Character> getCharacterSetForGroup(Integer index, String context) {
-        final Integer close = context.indexOf(CLOSE_SQUARE_BRACKET, index);
-        final String substring = context.substring(index + 1, close);
+    public static Set<Character> getCharacterSetForGroup(Context context) {
+        final Integer close = context.getRegex().indexOf(CLOSE_SQUARE_BRACKET, context.getIndex());
+        final String substring = context.getRegex().substring(context.getIndex() + 1, close);
 
         return range(0, substring.length()).boxed()
                 .map(substring::charAt)
@@ -89,4 +79,13 @@ public class Helper {
         }
         return character;
     }
+
+    public static Boolean isQuantifier(Context context) {
+        return Boolean.TRUE;
+    }
+
+    public static Boolean isCloseBracket(Context context) {
+        return CLOSE_SQUARE_BRACKET.equals(context.getCharacter());
+    }
+
 }
