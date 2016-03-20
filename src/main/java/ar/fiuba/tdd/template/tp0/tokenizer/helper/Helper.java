@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.template.tp0.tokenizer.helper;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver;
 
 import java.util.Set;
 

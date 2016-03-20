@@ -19,9 +19,9 @@ public class LengthCalculator {
 
     static {
         maxByType = new EnumMap<>(QuantifierType.class);
-        maxByType.put(ONE_OR_MANY, MAX_DEFINED);
-        maxByType.put(ZERO_OR_MANY, MAX_DEFINED);
-        maxByType.put(ZERO_OR_ONE, ONE);
+        maxByType.put(PLUS, MAX_DEFINED);
+        maxByType.put(ASTERISCK, MAX_DEFINED);
+        maxByType.put(QUESTION_MARK, ONE);
     }
 
     public static Integer getMax(Optional<Quantifier> optional) {

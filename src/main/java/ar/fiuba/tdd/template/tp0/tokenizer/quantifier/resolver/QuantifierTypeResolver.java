@@ -2,28 +2,26 @@ package ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.quantifiers.AsteriskQuantifier;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.quantifiers.PlusQuantifier;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.quantifiers.QuestionMarkQuantifier;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierType;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class QuantifierResolver {
+public class QuantifierTypeResolver {
 
     private static final Character PLUS = '+';
     private static final Character ASTERISK = '*';
     private static final Character QUESTION_MARK = '?';
 
-    private static final Map<Character, Quantifier> quantifiers;
+    private static final Map<Character, QuantifierType> quantifiers;
 
     static {
         quantifiers = new HashMap<>();
 
-        quantifiers.put(PLUS, new PlusQuantifier());
-        quantifiers.put(ASTERISK, new AsteriskQuantifier());
-        quantifiers.put(QUESTION_MARK, new QuestionMarkQuantifier());
+        quantifiers.put(PLUS, QuantifierType.PLUS);
+        quantifiers.put(ASTERISK, QuantifierType.ASTERISCK);
+        quantifiers.put(QUESTION_MARK, QuantifierType.QUESTION_MARK);
     }
 
     public static Optional<Quantifier> resolve(Context context) {
@@ -45,6 +43,7 @@ public class QuantifierResolver {
         return substring.chars().mapToObj(i -> (char) i)
                 .filter(quantifiers::containsKey)
                 .map(quantifiers::get)
+                .map(Quantifier::new)
                 .findFirst();
     }
 

@@ -2,14 +2,14 @@ package ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierTypeResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
 import java.util.Optional;
 
 import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver.DEFAULT_STATE;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isDot;
-import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver.hasQuantifier;
-import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver.resolve;
+import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierTypeResolver.hasQuantifier;
 import static ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType.ANY_CHARACTER;
 
 public class AnyCharacterState implements State {
@@ -25,7 +25,7 @@ public class AnyCharacterState implements State {
     }
 
     private Optional<Token> newToken(Context context) {
-        return Optional.of(new Token(ANY_CHARACTER, resolve(context)));
+        return Optional.of(new Token(ANY_CHARACTER, QuantifierTypeResolver.resolve(context)));
     }
 
     @Override

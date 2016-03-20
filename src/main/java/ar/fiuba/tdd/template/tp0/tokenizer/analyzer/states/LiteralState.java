@@ -3,7 +3,7 @@ package ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states;
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierTypeResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
 import java.util.Optional;
@@ -11,8 +11,8 @@ import java.util.Optional;
 import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver.DEFAULT_STATE;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isEscape;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isLiteral;
-import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver.hasQuantifier;
-import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver.isQuantifier;
+import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierTypeResolver.hasQuantifier;
+import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierTypeResolver.isQuantifier;
 import static ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType.LITERAL;
 
 public class LiteralState implements State {
@@ -42,7 +42,7 @@ public class LiteralState implements State {
 
     private Optional<Token> newToken(Context context) {
         final Character character = getLiteral(context);
-        final Optional<Quantifier> quantifier = QuantifierResolver.resolve(context);
+        final Optional<Quantifier> quantifier = QuantifierTypeResolver.resolve(context);
         return Optional.of(new Token(LITERAL, quantifier, character));
     }
 
