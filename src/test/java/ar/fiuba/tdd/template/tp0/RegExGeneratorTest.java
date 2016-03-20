@@ -18,7 +18,7 @@ public class RegExGeneratorTest {
     private RegExGenerator generator;
 
     private Boolean validate(String regEx, Integer numberOfResults) {
-        List<String> results =this.generator.generate(regEx, numberOfResults);
+        List<String> results = this.generator.generate(regEx, numberOfResults);
         if (results.size() != numberOfResults) {
             return Boolean.FALSE;
         }
@@ -32,7 +32,7 @@ public class RegExGeneratorTest {
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         this.generator = newRegExGenerator();
     }
 
