@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states;
 
+import ar.fiuba.tdd.template.tp0.exception.IllegalRegexException;
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
@@ -51,7 +52,7 @@ public class GroupState implements State {
         if (isOpenBracket(context)) {
             this.group = getCharacterSetForGroup(context);
             if (this.group.isEmpty()) {
-                throw new IllegalArgumentException("Empty group!");
+                throw new IllegalRegexException("Empty group!");
             }
 
             this.group.forEach(this::checkCharacter);
@@ -60,7 +61,7 @@ public class GroupState implements State {
 
     private void checkCharacter(Character character) {
         if ((ILLEGAL_CHARACTERS.indexOf(character) != -1) || isQuantifier(character)) {
-            throw new IllegalArgumentException("Illegal character in group");
+            throw new IllegalRegexException("Illegal character in group");
         }
     }
 

@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states;
 
+import ar.fiuba.tdd.template.tp0.exception.IllegalRegexException;
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver;
@@ -17,7 +18,7 @@ public class DefaultState implements State {
     public Optional<Token> resolveToken(Context context, Analyzer analyzer) {
 
         if (isQuantifier(context) || containsIllegalCharacters(context)) {
-            throw new IllegalArgumentException("Unexpected character here: " + context);
+            throw new IllegalRegexException("Unexpected character here: " + context);
         }
 
         analyzer.setState(StateResolver.resolve(context));
