@@ -6,11 +6,13 @@ import java.util.Set;
 
 public class RandomCharacterGenerator {
 
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&/()=¡@";
+    public static final String POSSIBLE_CHARACTERS =
+            "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+
     private static final Random random = new Random();
 
     public static Character getRandomChar() {
-        return CHARACTERS.charAt(random.nextInt(CHARACTERS.length()));
+        return POSSIBLE_CHARACTERS.charAt(random.nextInt(POSSIBLE_CHARACTERS.length()));
     }
 
     public static Character getRandomCharFrom(Set<Character> setOfCharacters) {

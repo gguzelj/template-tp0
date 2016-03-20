@@ -20,7 +20,7 @@ public class LengthCalculator {
     static {
         maxByType = new EnumMap<>(QuantifierType.class);
         maxByType.put(PLUS, MAX_DEFINED);
-        maxByType.put(ASTERISCK, MAX_DEFINED);
+        maxByType.put(ASTERISK, MAX_DEFINED);
         maxByType.put(QUESTION_MARK, ONE);
     }
 

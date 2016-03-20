@@ -4,17 +4,16 @@ import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 
 import java.util.Set;
 
+import static ar.fiuba.tdd.template.tp0.generator.helper.RandomCharacterGenerator.POSSIBLE_CHARACTERS;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.IntStream.range;
 
 public class Helper {
 
     public static final Character DOT = '.';
-    public static final String POSSIBLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&/()=¡@";
     public static final Character ESCAPE = '\\';
     public static final Character OPEN_SQUARE_BRACKET = '[';
     public static final Character CLOSE_SQUARE_BRACKET = ']';
-
 
     public static Boolean isLiteral(Context context) {
         return isLiteral(context.getCharacter());

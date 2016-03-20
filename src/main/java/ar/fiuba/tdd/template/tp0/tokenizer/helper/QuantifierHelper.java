@@ -20,7 +20,7 @@ public class QuantifierHelper {
         quantifierTypesMap = new HashMap<>();
 
         quantifierTypesMap.put(PLUS, QuantifierType.PLUS);
-        quantifierTypesMap.put(ASTERISK, QuantifierType.ASTERISCK);
+        quantifierTypesMap.put(ASTERISK, QuantifierType.ASTERISK);
         quantifierTypesMap.put(QUESTION_MARK, QuantifierType.QUESTION_MARK);
     }
 

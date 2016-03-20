@@ -66,10 +66,10 @@ public class RegExGeneratorTest {
         assertTrue(validate("[abc]", 1000));
     }
 
-//    @Test
-//    public void testCharacterSet2() {
-//        assertTrue(validate("\\+P?A?.+\\-*[abc]", 1));
-//    }
+    @Test
+    public void testComplexRegex() {
+        assertTrue(validate("\\+P?A?.+\\-*[abc]", 1));
+    }
 
 //    @Test
 //    public void testEscapedCharacterOnGroup() {
@@ -112,26 +112,20 @@ public class RegExGeneratorTest {
         assertTrue(validate("..]+", 1000));
     }
 
-//    @Test(expected = IllegalRegexException.class)
-//    public void testShouldFailOnMalformedGroup() {
-        //TODO Should fail with a '.' within group?
-//        assertTrue(validate("[.a]", 1000));
-//    }
-
     @Test(expected = IllegalRegexException.class)
     public void testShouldFailOnUnassignedQuantifier() {
         assertTrue(validate("+", 1000));
     }
 
-//    @Test(expected = IllegalRegexException.class)
-//    public void testShouldFailOnUnescapedCharacter() {
-//        assertTrue(validate("..\\", 1000));
-//    }
-//
-//    @Test(expected = IllegalRegexException.class)
-//    public void testShouldFailOnUnescapedCharacter2() {
-//        assertTrue(validate("\\", 1000));
-//    }
+    @Test(expected = IllegalRegexException.class)
+    public void testShouldFailOnUnescapedCharacter() {
+        assertTrue(validate("..\\", 1000));
+    }
+
+    @Test(expected = IllegalRegexException.class)
+    public void testShouldFailOnUnescapedCharacter2() {
+        assertTrue(validate("\\", 1000));
+    }
 
     @Test(expected = NullPointerException.class)
     public void testShouldFailOnEmptyTokenizer() {
