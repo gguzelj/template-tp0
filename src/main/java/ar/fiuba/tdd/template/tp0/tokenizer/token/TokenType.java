@@ -1,7 +1,7 @@
-package ar.fiuba.tdd.template.tp0.tokenizer.tokens;
+package ar.fiuba.tdd.template.tp0.tokenizer.token;
 
 /**
- * Enum that represents all types of tokens managed:
+ * Enum that represents all types of token managed:
  *  ANY_CHARACTER: .
  *  GROUP: [c_1, c_2, ... , c_n]
  *  LITERAL: c_1

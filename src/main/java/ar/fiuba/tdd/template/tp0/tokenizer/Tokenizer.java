@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.template.tp0.tokenizer;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
+import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
 import java.util.List;
 import java.util.Optional;

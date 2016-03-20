@@ -1,10 +1,10 @@
 package ar.fiuba.tdd.template.tp0;
 
 import ar.fiuba.tdd.template.tp0.generator.Generator;
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
 import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
+import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
-import java.util.*;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;

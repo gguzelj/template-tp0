@@ -11,7 +11,6 @@ import static java.util.stream.IntStream.range;
 public class Helper {
 
     public static final Character DOT = '.';
-
     public static final String POSSIBLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&/()=¡@";
     public static final Character ESCAPE = '\\';
     public static final Character OPEN_SQUARE_BRACKET = '[';

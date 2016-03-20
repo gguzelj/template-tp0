@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.template.tp0.generator;
 
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
+import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
 import java.util.List;
 
@@ -21,6 +21,5 @@ public class Generator {
     private String generate(Token token) {
         return this.generatorResolver.resolve(token).generate(token);
     }
-
 
 }

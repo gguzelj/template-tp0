@@ -4,8 +4,7 @@ import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver;
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.LiteralToken;
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
+import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
 import java.util.Optional;
 
@@ -14,6 +13,7 @@ import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isEscape;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isLiteral;
 import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver.hasQuantifier;
 import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver.isQuantifier;
+import static ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType.LITERAL;
 
 public class LiteralState implements State {
 
@@ -43,7 +43,7 @@ public class LiteralState implements State {
     private Optional<Token> newToken(Context context) {
         final Character character = getLiteral(context);
         final Optional<Quantifier> quantifier = QuantifierResolver.resolve(context);
-        return Optional.of(new LiteralToken(character, quantifier));
+        return Optional.of(new Token(LITERAL, quantifier, character));
     }
 
     private Character getLiteral(Context context) {

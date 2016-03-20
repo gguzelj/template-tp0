@@ -4,14 +4,14 @@ import ar.fiuba.tdd.template.tp0.generator.generators.AnyCharacterGenerator;
 import ar.fiuba.tdd.template.tp0.generator.generators.GroupGenerator;
 import ar.fiuba.tdd.template.tp0.generator.generators.LiteralGenerator;
 import ar.fiuba.tdd.template.tp0.generator.generators.StringGenerator;
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.TokenType;
+import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
+import ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Random;
 
-import static ar.fiuba.tdd.template.tp0.tokenizer.tokens.TokenType.*;
+import static ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType.*;
 import static java.util.Objects.isNull;
 
 public class GeneratorResolver {
@@ -21,7 +21,7 @@ public class GeneratorResolver {
     static {
         generators = new EnumMap<>(TokenType.class);
 
-        generators.put(ANY_CHARACTER, new AnyCharacterGenerator(new Random()));
+        generators.put(ANY_CHARACTER, new AnyCharacterGenerator());
         generators.put(GROUP, new GroupGenerator());
         generators.put(LITERAL, new LiteralGenerator());
     }

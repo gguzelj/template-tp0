@@ -3,12 +3,12 @@ package ar.fiuba.tdd.template.tp0.tokenizer.analyzer;
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.DefaultState;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.State;
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
+import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
 import java.util.Optional;
 
 /**
- * This method analyze each character of the regex, emitting tokens when necessary.
+ * This method analyze each character of the regex, emitting token when necessary.
  * i.e. for the regex '..+[ab]*d?c':
  * . -> Emits anyCharacterToken
  * . -> Emits anyCharacterToken (with + quantifier)

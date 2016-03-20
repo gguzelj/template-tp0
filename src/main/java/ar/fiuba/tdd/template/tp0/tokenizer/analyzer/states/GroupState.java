@@ -4,8 +4,8 @@ import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierResolver;
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.GroupToken;
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
+import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
+import ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType;
 
 import java.util.Optional;
 import java.util.Set;
@@ -24,12 +24,19 @@ public class GroupState implements State {
 
         checkGroup(context);
 
-        if (isQuantifier(context) || previousCharacterEndsGroup(context)) {
+        if (nextCharacterIsQuantifier(context) || previousCharacterEndsGroup(context)) {
             analyzer.setState(DEFAULT_STATE);
             return newToken(context);
         }
 
         return Optional.empty();
+    }
+
+    private Boolean nextCharacterIsQuantifier(Context context) {
+        if (!context.hasNextCharacter()) {
+            return Boolean.TRUE;
+        }
+        return isQuantifier(context);
     }
 
     private Boolean previousCharacterEndsGroup(Context context) {
@@ -61,7 +68,7 @@ public class GroupState implements State {
         Set<Character> group = this.group;
         Optional<Quantifier> quantifier = QuantifierResolver.resolve(context);
 
-        return Optional.of(new GroupToken(group, quantifier));
+        return Optional.of(new Token(TokenType.GROUP, quantifier, group));
     }
 
     @Override

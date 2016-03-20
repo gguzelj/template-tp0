@@ -3,7 +3,7 @@ package ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states;
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver;
-import ar.fiuba.tdd.template.tp0.tokenizer.tokens.Token;
+import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
 import java.util.Optional;
 

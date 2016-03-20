@@ -29,12 +29,12 @@ public class RegExGeneratorTest {
                 .allMatch(match -> match == Boolean.TRUE);
     }
 
-//    @Test
-//    public void testAnyCharacter() {
-//        assertTrue(validate("..+[ab]*d?c", 1));
-//    }
-//
     /*
+    @Test
+    public void testAnyCharacter() {
+        assertTrue(validate("..+[ab]*d?c", 1));
+    }
+
 
     @Test
     public void testMultipleCharacters() {
@@ -65,7 +65,9 @@ public class RegExGeneratorTest {
     public void testCharacterSetWithQuantifiers() {
         assertTrue(validate("[abc]+", 1));
     }
-*/
+
+    */
+
     private RegExGenerator newRegExGenerator(int numberOfResults) {
         Tokenizer tokenizer = newTokenizer();
         Generator generator = newGenerator();
