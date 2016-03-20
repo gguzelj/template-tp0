@@ -10,8 +10,8 @@ public class AnyCharacterGenerator implements StringGenerator {
     private static final String EMPTY_STRING = "";
 
     @Override
-    public String generate(Token token, Integer min, Integer max) {
-        return range(min, max).boxed()
+    public String generate(Token token, Integer max) {
+        return range(0, max).boxed()
                 .map(i -> getRandomChar())
                 .map(String::valueOf)
                 .reduce(String::concat)

@@ -29,44 +29,40 @@ public class RegExGeneratorTest {
                 .allMatch(match -> match == Boolean.TRUE);
     }
 
-//    @Test
-//    public void testAnyCharacter() {
-//        assertTrue(validate("..+[ab]*d?c", 1));
-//    }
-//
-    /*
+    @Test
+    public void testAnyCharacter() {
+        assertTrue(validate("..+[ab]*d?c", 100));
+    }
 
     @Test
     public void testMultipleCharacters() {
-        assertTrue(validate("...", 1));
+        assertTrue(validate("...", 100));
     }
 
     @Test
     public void testLiteral() {
-        assertTrue(validate("\\@", 1));
+        assertTrue(validate("\\@", 100));
     }
 
     @Test
     public void testLiteralDotCharacter() {
-        assertTrue(validate("\\@..", 1));
+        assertTrue(validate("\\@..", 100));
     }
 
     @Test
     public void testZeroOrOneCharacter() {
-        assertTrue(validate("\\@.h?", 1));
+        assertTrue(validate("\\@.h?", 100));
     }
 
     @Test
     public void testCharacterSet() {
-        assertTrue(validate("[abc]", 1));
+        assertTrue(validate("[abc]", 1000));
     }
 
     @Test
     public void testCharacterSetWithQuantifiers() {
-        assertTrue(validate("[abc]+", 1));
+        assertTrue(validate("[abc]+", 100));
     }
-
-    */
 
     private RegExGenerator newRegExGenerator(int numberOfResults) {
         Tokenizer tokenizer = newTokenizer();
