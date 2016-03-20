@@ -26,7 +26,7 @@ public class LengthCalculator {
 
     public static Integer getMax(Optional<Quantifier> optional) {
         final Integer response = getRandomMax(optional);
-        return (response == ZERO) ? ONE : response;
+        return (ZERO.equals(response)) ? ONE : response;
     }
 
     private static Integer getRandomMax(Optional<Quantifier> optional) {
