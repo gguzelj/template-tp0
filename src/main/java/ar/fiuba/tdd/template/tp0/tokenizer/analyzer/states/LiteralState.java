@@ -2,8 +2,8 @@ package ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper;
+import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
 import java.util.Optional;

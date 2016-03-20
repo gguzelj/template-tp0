@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.template.tp0.generator.generators;
+package ar.fiuba.tdd.template.tp0.generator.helper;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierType;

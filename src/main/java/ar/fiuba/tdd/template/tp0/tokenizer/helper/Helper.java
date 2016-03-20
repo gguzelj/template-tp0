@@ -29,7 +29,7 @@ public class Helper {
     }
 
     public static Boolean isGroup(Character character) {
-        return character.equals(OPEN_SQUARE_BRACKET);
+        return OPEN_SQUARE_BRACKET.equals(character);
     }
 
     public static Boolean isDot(Context context) {

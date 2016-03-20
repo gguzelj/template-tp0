@@ -1,10 +1,11 @@
 package ar.fiuba.tdd.template.tp0.generator;
 
+import ar.fiuba.tdd.template.tp0.generator.resolver.GeneratorResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
 import java.util.List;
 
-import static ar.fiuba.tdd.template.tp0.generator.generators.LengthCalculator.getMax;
+import static ar.fiuba.tdd.template.tp0.generator.helper.LengthCalculator.getMax;
 import static java.util.stream.Collectors.toList;
 
 public class Generator {
@@ -20,8 +21,7 @@ public class Generator {
     }
 
     private String generate(Token token) {
-        final Integer max = getMax(token.getQuantifier());
-        return this.generatorResolver.resolve(token).generate(token, max);
+        return this.generatorResolver.resolve(token).generate(token, getMax(token.getQuantifier()));
     }
 
 }
