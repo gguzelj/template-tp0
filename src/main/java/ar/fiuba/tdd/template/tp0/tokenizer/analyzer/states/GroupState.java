@@ -4,7 +4,7 @@ import ar.fiuba.tdd.template.tp0.exception.IllegalRegexException;
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
-import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierTypeResolver;
+import ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper;
 import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 import ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType;
 
@@ -13,7 +13,7 @@ import java.util.Set;
 
 import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver.DEFAULT_STATE;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.*;
-import static ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver.QuantifierTypeResolver.isQuantifier;
+import static ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper.isQuantifier;
 
 public class GroupState implements State {
 
@@ -67,7 +67,7 @@ public class GroupState implements State {
 
     private Optional<Token> newToken(Context context) {
         Set<Character> group = this.group;
-        Optional<Quantifier> quantifier = QuantifierTypeResolver.resolve(context);
+        Optional<Quantifier> quantifier = QuantifierHelper.resolveQuantifier(context);
 
         return Optional.of(new Token(TokenType.GROUP, quantifier, group));
     }

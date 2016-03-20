@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.template.tp0.tokenizer.quantifier.resolver;
+package ar.fiuba.tdd.template.tp0.tokenizer.helper;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
@@ -8,23 +8,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class QuantifierTypeResolver {
+public class QuantifierHelper {
 
     private static final Character PLUS = '+';
     private static final Character ASTERISK = '*';
     private static final Character QUESTION_MARK = '?';
 
-    private static final Map<Character, QuantifierType> quantifiers;
+    private static final Map<Character, QuantifierType> quantifierTypesMap;
 
     static {
-        quantifiers = new HashMap<>();
+        quantifierTypesMap = new HashMap<>();
 
-        quantifiers.put(PLUS, QuantifierType.PLUS);
-        quantifiers.put(ASTERISK, QuantifierType.ASTERISCK);
-        quantifiers.put(QUESTION_MARK, QuantifierType.QUESTION_MARK);
+        quantifierTypesMap.put(PLUS, QuantifierType.PLUS);
+        quantifierTypesMap.put(ASTERISK, QuantifierType.ASTERISCK);
+        quantifierTypesMap.put(QUESTION_MARK, QuantifierType.QUESTION_MARK);
     }
 
-    public static Optional<Quantifier> resolve(Context context) {
+    public static Optional<Quantifier> resolveQuantifier(Context context) {
         return (isQuantifier(context)) ? getNextQuantifier(context) : Optional.empty();
     }
 
@@ -32,7 +32,7 @@ public class QuantifierTypeResolver {
         if (!context.hasNextCharacter()) {
             return Boolean.FALSE;
         }
-        return quantifiers.containsKey(context.getNextCharacter().get());
+        return quantifierTypesMap.containsKey(context.getNextCharacter().get());
     }
 
     public static Optional<Quantifier> getNextQuantifier(Context context) {
@@ -41,8 +41,8 @@ public class QuantifierTypeResolver {
         final String substring = regex.substring(index, regex.length());
 
         return substring.chars().mapToObj(i -> (char) i)
-                .filter(quantifiers::containsKey)
-                .map(quantifiers::get)
+                .filter(quantifierTypesMap::containsKey)
+                .map(quantifierTypesMap::get)
                 .map(Quantifier::new)
                 .findFirst();
     }
@@ -53,7 +53,7 @@ public class QuantifierTypeResolver {
     }
     
     public static Boolean isQuantifier(Character character) {
-        return quantifiers.containsKey(character);
+        return quantifierTypesMap.containsKey(character);
     }
 
 }
