@@ -29,12 +29,12 @@ public class RegExGeneratorTest {
                 .allMatch(match -> match == Boolean.TRUE);
     }
 
+//    @Test
+//    public void testAnyCharacter() {
+//        assertTrue(validate("..+[ab]*d?c", 1));
+//    }
+//
     /*
-    @Test
-    public void testAnyCharacter() {
-        assertTrue(validate("..+[ab]*d?c", 1));
-    }
-
 
     @Test
     public void testMultipleCharacters() {

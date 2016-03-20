@@ -9,7 +9,6 @@ import ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Random;
 
 import static ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType.*;
 import static java.util.Objects.isNull;
