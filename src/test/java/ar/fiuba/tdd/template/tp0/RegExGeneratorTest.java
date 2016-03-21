@@ -4,7 +4,6 @@ import ar.fiuba.tdd.template.tp0.exception.IllegalRegexException;
 import ar.fiuba.tdd.template.tp0.generator.Generator;
 import ar.fiuba.tdd.template.tp0.generator.resolver.GeneratorResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.Tokenizer;
-import ar.fiuba.tdd.template.tp0.tokenizer.analyzer.Analyzer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -208,7 +207,7 @@ public class RegExGeneratorTest {
     }
 
     private Tokenizer newTokenizer() {
-        return new Tokenizer(new Analyzer());
+        return new Tokenizer();
     }
 
 }
