@@ -2,11 +2,7 @@ package ar.fiuba.tdd.template.tp0.tokenizer.helper;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 
-import java.util.Set;
-
 import static ar.fiuba.tdd.template.tp0.generator.helper.RandomCharacterGenerator.POSSIBLE_CHARACTERS;
-import static java.util.stream.Collectors.toSet;
-import static java.util.stream.IntStream.range;
 
 public class Helper {
 
@@ -24,19 +20,18 @@ public class Helper {
     }
 
     public static Boolean isGroup(Context context) {
-        return isGroup(context.getCharacter());
-    }
-
-    public static Boolean isGroup(Character character) {
-        return OPEN_SQUARE_BRACKET.equals(character);
+        return OPEN_SQUARE_BRACKET.equals(context.getCharacter());
     }
 
     public static Boolean isDot(Context context) {
-        return isDot(context.getCharacter());
+        return DOT.equals(context.getCharacter());
     }
 
-    public static Boolean isDot(Character character) {
-        return DOT.equals(character);
+    public static Boolean isEscaped(Context context) {
+        if (!context.hasPreviousCharacter()) {
+            return Boolean.FALSE;
+        }
+        return isEscape(context.getPreviousCharacter().get());
     }
 
     public static Boolean isEscape(Context context) {
@@ -47,21 +42,16 @@ public class Helper {
         return ESCAPE.equals(character);
     }
 
+    public static Boolean isCloseBracket(Context context) {
+        return isCloseBracket(context.getCharacter());
+    }
+
     public static Boolean isCloseBracket(Character character) {
         return CLOSE_SQUARE_BRACKET.equals(character);
     }
 
     public static Boolean isOpenBracket(Context context) {
         return OPEN_SQUARE_BRACKET.equals(context.getCharacter());
-    }
-
-    public static Set<Character> getCharacterSetForGroup(Context context) {
-        final Integer close = context.getRegex().indexOf(CLOSE_SQUARE_BRACKET, context.getIndex());
-        final String substring = context.getRegex().substring(context.getIndex() + 1, close);
-
-        return range(0, substring.length()).boxed()
-                .map(substring::charAt)
-                .collect(toSet());
     }
 
 }
