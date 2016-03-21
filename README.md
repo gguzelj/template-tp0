@@ -59,9 +59,17 @@ regexGenerator.generate("b*", 2); //Could return ["", "bbbbb"]
 ```
 
 ##### + (plus mark):
-Similar to *****, but forcing at least one repetition. For example:
+Similar to *, but forcing at least one repetition. For example:
 ``` java
 regexGenerator.generate("b+", 2); //Could return ["b", "bb"]
 ```
 
 ## Examples
+
+The following are some examples of regExGenerator response:
+
+| Regex | Response |
+| ----- | -------- |
+| [abc]+  | [**c**, **b**, **cbaaaaab**, **abaabbbbbaaccb**, **babb**, **bccaaac**, ...] |
+| ..+[ab]*d?c | [**`nbabdc**, **Fbbabbbaabadc**, **'HMYq'bbdc**, **;Xadc**, **euBQaaaababbaadc**] |
+| \\+P?A?.+\\-*[ab\\]\\[c]   | [**+PAae---]**, **+PA;----------[**, **+PA;SNBz{GIP--------------b**] |
