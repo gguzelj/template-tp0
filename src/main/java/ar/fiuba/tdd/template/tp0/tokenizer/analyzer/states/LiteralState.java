@@ -13,6 +13,7 @@ import java.util.Optional;
 import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver.DEFAULT_STATE;
 import static ar.fiuba.tdd.template.tp0.tokenizer.analyzer.states.resolver.StateResolver.resolve;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isEscape;
+import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isEscaped;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.isLiteral;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper.hasQuantifier;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper.isQuantifier;
@@ -32,7 +33,7 @@ public class LiteralState implements State {
 
         if (isNull(this.literal)) {
             this.literal = getLiteral(context);
-            return context.hasNextCharacter() ? Optional.empty() : returnToken(analyzer);
+            return (isEscape(context) || hasQuantifier(context)) ? Optional.empty() : returnToken(analyzer);
         }
 
         if (hasQuantifier(context) && isNull(this.quantifier)) {
@@ -63,11 +64,9 @@ public class LiteralState implements State {
     }
 
     private Character getLiteral(Context context) {
-
         if (isEscape(context)) {
             return context.getNextCharacter().get();
         }
-
         return context.getCharacter();
     }
 

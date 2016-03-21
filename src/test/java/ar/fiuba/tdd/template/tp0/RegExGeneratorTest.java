@@ -42,6 +42,11 @@ public class RegExGeneratorTest {
     }
 
     @Test
+    public void testOnlyLiterals() {
+        assertTrue(validate("aabbccd", 1000));
+    }
+
+    @Test
     public void testQuestionMarkQuantifier() {
         assertTrue(validate("a?", 1000));
     }
