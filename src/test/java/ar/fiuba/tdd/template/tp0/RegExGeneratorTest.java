@@ -37,18 +37,23 @@ public class RegExGeneratorTest {
     }
 
     @Test
-    public void testAnyCharacter() {
-        assertTrue(validate("..+[ab]*d?c", 1000));
+    public void testAsteriskQuantifier() {
+        assertTrue(validate("a*", 1000));
+    }
+
+    @Test
+    public void testQuestionMarkQuantifier() {
+        assertTrue(validate("a?", 1000));
+    }
+
+    @Test
+    public void testPlusQuantifier() {
+        assertTrue(validate("a?", 1000));
     }
 
     @Test
     public void testMultipleCharacters() {
         assertTrue(validate("...", 1000));
-    }
-
-    @Test
-    public void testLiteral() {
-        assertTrue(validate("\\@", 1000));
     }
 
     @Test
@@ -62,24 +67,48 @@ public class RegExGeneratorTest {
     }
 
     @Test
+    public void testLiteral() {
+        assertTrue(validate("\\@", 1000));
+    }
+
+    @Test
     public void testCharacterSet() {
         assertTrue(validate("[abc]", 1000));
     }
 
     @Test
-    public void testComplexRegex() {
-        assertTrue(validate("\\+P?A?.+\\-*[abc]", 1));
+    public void testEscapedCharacterOnGroup() {
+        assertTrue(validate("[as\\+]", 1000));
     }
 
-//    @Test
-//    public void testEscapedCharacterOnGroup() {
-        //TODO accept escaped characters on group
-//        assertTrue(validate("[as\\+]", 1000));
-//    }
+    @Test
+    public void testEscapedCharacterOnGroup2() {
+        assertTrue(validate("[as\\]]", 1000));
+    }
 
     @Test
     public void testCharacterSetWithQuantifiers() {
         assertTrue(validate("[abc]+", 1000));
+    }
+
+    @Test
+    public void testComplexRegex() {
+        assertTrue(validate("..+[ab]*d?c", 1000));
+    }
+
+    @Test
+    public void testComplexRegex2() {
+        assertTrue(validate("\\+P?A?.+\\-*[abc]", 1000));
+    }
+
+    @Test
+    public void testComplexRegex3() {
+        assertTrue(validate("\\+P?A?.+\\-*[ab\\]\\[c]", 1000));
+    }
+
+    @Test
+    public void testComplexRegex4() {
+        assertTrue(validate("\\+.*\\?[A\\?\\.\\+\\\\\\]\\[c]", 1000));
     }
 
     @Test(expected = IllegalRegexException.class)
@@ -93,12 +122,22 @@ public class RegExGeneratorTest {
     }
 
     @Test(expected = IllegalRegexException.class)
-    public void testShouldFailOnMalformedEmptyGroup() {
+    public void testShouldFailOnUnclosedGroup() {
+        assertTrue(validate("[ab", 1000));
+    }
+
+    @Test(expected = IllegalRegexException.class)
+    public void testShouldFailOnUnclosedGroup2() {
+        assertTrue(validate("[ab\\]", 1000));
+    }
+
+    @Test(expected = IllegalRegexException.class)
+    public void testShouldFailOnMalformedGroup() {
         assertTrue(validate("[as+]", 1000));
     }
 
     @Test(expected = IllegalRegexException.class)
-    public void testShouldFailOnMalformedEmptyGroup2() {
+    public void testShouldFailOnMalformedGroup2() {
         assertTrue(validate("[a[]", 1000));
     }
 
@@ -113,18 +152,23 @@ public class RegExGeneratorTest {
     }
 
     @Test(expected = IllegalRegexException.class)
+    public void testShouldFailOnUnopenedGroup3() {
+        assertTrue(validate("[a]]", 1000));
+    }
+
+    @Test(expected = IllegalRegexException.class)
     public void testShouldFailOnUnassignedQuantifier() {
         assertTrue(validate("+", 1000));
     }
 
     @Test(expected = IllegalRegexException.class)
     public void testShouldFailOnUnescapedCharacter() {
-        assertTrue(validate("..\\", 1000));
+        assertTrue(validate("\\", 1000));
     }
 
     @Test(expected = IllegalRegexException.class)
     public void testShouldFailOnUnescapedCharacter2() {
-        assertTrue(validate("\\", 1000));
+        assertTrue(validate("..\\", 1000));
     }
 
     @Test(expected = NullPointerException.class)
