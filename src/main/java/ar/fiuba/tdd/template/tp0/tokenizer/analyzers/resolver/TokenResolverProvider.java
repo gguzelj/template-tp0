@@ -22,7 +22,7 @@ public class TokenResolverProvider {
         states.add(LITERAL_STATE);
     }
 
-    public static TokenProvider resolve(String regex) {
+    public static TokenProvider getProvider(String regex) {
         return states.stream()
                 .filter(state -> state.supports(regex.charAt(0)))
                 .findFirst()

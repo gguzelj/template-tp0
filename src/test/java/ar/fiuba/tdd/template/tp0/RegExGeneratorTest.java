@@ -91,6 +91,11 @@ public class RegExGeneratorTest {
     }
 
     @Test
+    public void testEscapedCharacterOnGroupWithQuantifier() {
+        assertTrue(validate("[as\\?]*", 1000));
+    }
+
+    @Test
     public void testCharacterSetWithQuantifiers() {
         assertTrue(validate("[abc]+", 1000));
     }

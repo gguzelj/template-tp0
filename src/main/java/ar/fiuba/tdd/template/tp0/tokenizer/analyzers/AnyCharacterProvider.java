@@ -29,9 +29,9 @@ public class AnyCharacterProvider implements TokenProvider {
     @Override
     public String getRemainRegex(String regEx) {
         if (hasQuantifier(regEx)) {
-            return regEx.substring(2, regEx.length());
+            return regEx.substring(2);
         }
-        return regEx.substring(1, regEx.length());
+        return regEx.substring(1);
     }
 
 }

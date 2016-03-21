@@ -13,6 +13,10 @@ public class Helper {
         return LITERALS.indexOf(character) != -1;
     }
 
+    public static Boolean isEscape(String regex) {
+        return isEscape(regex.charAt(0));
+    }
+
     public static Boolean isEscape(Character character) {
         return ESCAPE.equals(character);
     }
