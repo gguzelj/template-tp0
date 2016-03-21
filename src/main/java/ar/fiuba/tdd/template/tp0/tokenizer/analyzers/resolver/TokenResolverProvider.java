@@ -7,12 +7,12 @@ import java.util.List;
 
 public class TokenResolverProvider {
 
-    public static final TokenResolver DEFAULT_STATE = new DefaultResolver();
+    public static final TokenProvider DEFAULT_STATE = new DefaultProvider();
 
-    private static final List<TokenResolver> states;
-    private static final TokenResolver ANY_CHARACTER_STATE = new AnyCharacterResolver();
-    private static final TokenResolver GROUP_STATE = new GroupResolver();
-    private static final TokenResolver LITERAL_STATE = new LiteralResolver();
+    private static final List<TokenProvider> states;
+    private static final TokenProvider ANY_CHARACTER_STATE = new AnyCharacterProvider();
+    private static final TokenProvider GROUP_STATE = new GroupProvider();
+    private static final TokenProvider LITERAL_STATE = new LiteralProvider();
 
     static {
         states = new ArrayList<>();
@@ -22,9 +22,9 @@ public class TokenResolverProvider {
         states.add(LITERAL_STATE);
     }
 
-    public static TokenResolver resolve(Character character) {
+    public static TokenProvider resolve(String regex) {
         return states.stream()
-                .filter(state -> state.supports(character))
+                .filter(state -> state.supports(regex.charAt(0)))
                 .findFirst()
                 .orElse(DEFAULT_STATE);
     }

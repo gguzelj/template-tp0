@@ -9,10 +9,10 @@ import java.util.Optional;
 
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.*;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper.hasQuantifier;
-import static ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper.isQuantifier;
+import static ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper.resolveQuantifier;
 import static ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType.LITERAL;
 
-public class LiteralResolver implements TokenResolver {
+public class LiteralProvider implements TokenProvider {
 
     @Override
     public Token resolveToken(String regex) {
@@ -27,8 +27,12 @@ public class LiteralResolver implements TokenResolver {
     @Override
     public String getRemainRegex(String regEx) {
         Integer begin = 1;
-        begin += isEscape(regEx.charAt(0)) ? 1: 0;
-        begin += isEscape(regEx.charAt(0)) ? hasQuantifier(regEx.substring(1)) ? 1 : 0 : hasQuantifier(regEx) ? 1 : 0;
+        if (isEscape(regEx.charAt(0))) {
+            begin += 1;
+            begin += hasQuantifier(regEx.substring(1)) ? 1 : 0;
+        } else {
+            begin += hasQuantifier(regEx) ? 1 : 0;
+        }
         return regEx.substring(begin);
     }
 
@@ -38,11 +42,11 @@ public class LiteralResolver implements TokenResolver {
 
     private Optional<Quantifier> getQuantifier(String regex) {
         if (isEscape(regex.charAt(0)) && hasQuantifier(regex.substring(1))) {
-            return Optional.of(QuantifierHelper.resolveQuantifier(regex.charAt(2)));
+            return Optional.of(resolveQuantifier(regex.charAt(2)));
         }
 
         if (hasQuantifier(regex)) {
-            return Optional.of(QuantifierHelper.resolveQuantifier(regex.charAt(1)));
+            return Optional.of(resolveQuantifier(regex.charAt(1)));
         }
 
         return Optional.empty();

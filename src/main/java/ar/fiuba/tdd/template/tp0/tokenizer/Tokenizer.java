@@ -1,6 +1,5 @@
 package ar.fiuba.tdd.template.tp0.tokenizer;
 
-import ar.fiuba.tdd.template.tp0.tokenizer.analyzers.TokenResolver;
 import ar.fiuba.tdd.template.tp0.tokenizer.analyzers.resolver.TokenResolverProvider;
 import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
@@ -14,12 +13,19 @@ public class Tokenizer {
         List<Token> response = new ArrayList<>();
 
         while (!remainingRegex.isEmpty()) {
-            TokenResolver resolve = TokenResolverProvider.resolve(remainingRegex.charAt(0));
-            response.add(resolve.resolveToken(remainingRegex));
-            remainingRegex = resolve.getRemainRegex(remainingRegex);
+            response.add(resolveToken(remainingRegex));
+            remainingRegex = getRemainRegex(remainingRegex);
         }
 
         return response;
+    }
+
+    private String getRemainRegex(String regex) {
+        return TokenResolverProvider.resolve(regex).getRemainRegex(regex);
+    }
+
+    public Token resolveToken(String regex) {
+        return TokenResolverProvider.resolve(regex).resolveToken(regex);
     }
 
 }

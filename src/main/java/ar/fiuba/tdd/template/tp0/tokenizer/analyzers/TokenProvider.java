@@ -2,7 +2,7 @@ package ar.fiuba.tdd.template.tp0.tokenizer.analyzers;
 
 import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 
-public interface TokenResolver {
+public interface TokenProvider {
 
     Token resolveToken(String regex);
 

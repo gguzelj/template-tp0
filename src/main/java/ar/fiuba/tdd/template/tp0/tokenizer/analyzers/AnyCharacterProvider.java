@@ -10,7 +10,7 @@ import static ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper.hasQua
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper.resolveQuantifier;
 import static ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType.ANY_CHARACTER;
 
-public class AnyCharacterResolver implements TokenResolver {
+public class AnyCharacterProvider implements TokenProvider {
 
     @Override
     public Token resolveToken(String regex) {

@@ -5,18 +5,15 @@ import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.token.Token;
 import ar.fiuba.tdd.template.tp0.tokenizer.token.TokenType;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.Helper.*;
 import static ar.fiuba.tdd.template.tp0.tokenizer.helper.QuantifierHelper.*;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.IntStream.range;
 
-public class GroupResolver implements TokenResolver {
+public class GroupProvider implements TokenProvider {
 
     @Override
     public Token resolveToken(String regex) {
@@ -87,10 +84,10 @@ public class GroupResolver implements TokenResolver {
     private void checkIllegal(Character illegal, String group) {
         range(0, group.length()).boxed()
                 .forEach(index -> {
-                    if (illegal.equals(group.charAt(index))) {
-                        checkIfIllegalIsEscaped(index, group);
-                    }
-                });
+                        if (illegal.equals(group.charAt(index))) {
+                            checkIfIllegalIsEscaped(index, group);
+                        }
+                    });
     }
 
     private void checkIfIllegalIsEscaped(Integer index, String group) {
