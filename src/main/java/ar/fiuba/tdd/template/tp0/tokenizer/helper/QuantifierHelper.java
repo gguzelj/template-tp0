@@ -1,12 +1,11 @@
 package ar.fiuba.tdd.template.tp0.tokenizer.helper;
 
-import ar.fiuba.tdd.template.tp0.tokenizer.Context;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.Quantifier;
 import ar.fiuba.tdd.template.tp0.tokenizer.quantifier.QuantifierType;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 
 public class QuantifierHelper {
 
@@ -24,36 +23,31 @@ public class QuantifierHelper {
         quantifierTypesMap.put(QUESTION_MARK, QuantifierType.QUESTION_MARK);
     }
 
-    public static Optional<Quantifier> resolveQuantifier(Context context) {
-        return (isQuantifier(context)) ? getNextQuantifier(context) : Optional.empty();
+    public static Quantifier resolveQuantifier(Character character) {
+        QuantifierType quantifierType = quantifierTypesMap.get(character);
+        if (Objects.isNull(quantifierType)) {
+            throw new IllegalStateException("Quantifier not found for " + character);
+        }
+        return new Quantifier(quantifierType);
     }
 
-    public static Boolean hasQuantifier(Context context) {
-        if (!context.hasNextCharacter()) {
+    public static Boolean hasQuantifier(String regex) {
+        if (!hasNextCharacter(regex)) {
             return Boolean.FALSE;
         }
-        return quantifierTypesMap.containsKey(context.getNextCharacter().get());
+        return quantifierTypesMap.containsKey(getNextCharacter(regex));
     }
 
-    public static Optional<Quantifier> getNextQuantifier(Context context) {
-        final String regex = context.getRegex();
-        final Integer index = context.getIndex();
-        final String substring = regex.substring(index, regex.length());
-
-        return substring.chars().mapToObj(i -> (char) i)
-                .filter(quantifierTypesMap::containsKey)
-                .map(quantifierTypesMap::get)
-                .map(Quantifier::new)
-                .findFirst();
-    }
-
-
-    public static Boolean isQuantifier(Context context) {
-        return isQuantifier(context.getCharacter());
-    }
-    
     public static Boolean isQuantifier(Character character) {
         return quantifierTypesMap.containsKey(character);
+    }
+
+    public static Boolean hasNextCharacter(String regex) {
+        return regex.length() > 1;
+    }
+
+    public static Character getNextCharacter(String regex) {
+        return regex.charAt(1);
     }
 
 }
