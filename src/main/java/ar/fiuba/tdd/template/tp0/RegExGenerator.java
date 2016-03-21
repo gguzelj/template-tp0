@@ -22,6 +22,10 @@ public class RegExGenerator {
         this.generator = requireNonNull(generator, "Generator can't be null");
     }
 
+    public List<String> generate(String regEx) {
+        return generate(regEx, 1);
+    }
+
     public List<String> generate(String regEx, Integer numberOfResults) {
         if (isNull(regEx) || isNull(numberOfResults)) {
             throw new IllegalArgumentException("Regex or number of results can't be empty");
